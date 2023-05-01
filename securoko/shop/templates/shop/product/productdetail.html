@@ -1,0 +1,72 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+    {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+        	<h2>Описание</h2>
+            <div class="col col_13 product_detail">
+        	    <img src="{{ product.image.url }}" alt="{{ product.slug }}" />
+            </div>
+            <div class="col col_13 no_margin_right">
+                <table>
+                    <tr>
+                        <td height="30" width="160">Цена:</td>
+                        <td>{{ product.price }}</td>
+                    </tr>
+                    <tr>
+                        <td height="30">Наличие:</td>
+                        <td>In Stock</td>
+                    </tr>
+                    <tr>
+                        <td height="30">Модель:</td>
+                        <td>{{ product.model }}</td>
+                    </tr>
+                    <tr>
+                        <td height="30">Производитель:</td>
+                        <td>{{ product.manufacturer }}</td>
+                    </tr>
+                    <tr><td height="30">Количество</td><td><input type="text" value="1" style="width: 20px; text-align: right" /></td></tr>
+                </table>
+                <div class="cleaner h20"></div>
+                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+			</div>
+            <div class="cleaner h30"></div>
+
+            <h5><strong>Характеристики</strong></h5>
+            <p>{{ product.full_description|safe }}</p>
+
+            <div class="cleaner h50"></div>
+
+            <h4>Other Products</h4>
+        	<div class="col col_14 product_gallery">
+            	<a href="productdetail.html"><img src="images/product/01.jpg" alt="Product 01" /></a>
+                <h3>Ut eu feugiat</h3>
+                <p class="product_price">$ 100</p>
+                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+            </div>
+            <div class="col col_14 product_gallery">
+            	<a href="productdetail.html"><img src="images/product/02.jpg" alt="Product 02" /></a>
+                <h3>Curabitur et turpis</h3>
+                <p class="product_price">$ 200</p>
+                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+            </div>
+            <div class="col col_14 product_gallery no_margin_right">
+            	<a href="productdetail.html"><img src="images/product/03.jpg" alt="Product 03" /></a>
+                <h3>Mauris consectetur</h3>
+                <p class="product_price">$ 120</p>
+                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+            </div>
+            <a href="#" class="more float_r">View all</a>
+
+            <div class="cleaner"></div>
+        </div> <!-- END of content -->
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock content %}

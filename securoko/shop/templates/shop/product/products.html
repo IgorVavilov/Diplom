@@ -2,16 +2,10 @@
 {% block content %}
 {% load static %}
 
-    <div id="templatemo_middle">
-    	<img src="{% static 'images/templatemo_image_01.png' %}" alt="Image 01" />
-    	<h1>Introducing Web Store</h1>
-        <p>Web Store is a free css template for your personal or commercial websites. Feel free to download, edit and use this template for any purpose.</p>
-        <a href="#" class="buy_now">Browse All Products</a>
-    </div> <!-- END of middle -->
-
+<div class="cleaner h20"></div>
     <div id="templatemo_main_top"></div>
     <div id="templatemo_main">
-    	<div id="product_slider">
+        <div id="product_slider">
     		<div id="SlideItMoo_outer">
                 <div id="SlideItMoo_inner">
                     <div id="SlideItMoo_items">
@@ -25,10 +19,11 @@
         {% include 'shop/sidebar.html' %}
 
         <div id="content">
+            <h2>Категория {{ category.name }}</h2>
             {% for product in products %}
         	<div class="col col_14 product_gallery">
             	<a href="{% url 'productdetail' product.id product.slug %}">
-                    <img src="{{ product.image.url }}" alt="Product 01" />
+                    <img src="{{ product.image.url }}" alt="{{ product.slug }}" />
                 <h3>{{ product.name|slice:45 }}</h3></a>
                 <p class="product_price">{{ product.price }} Руб.</p>
                 <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
