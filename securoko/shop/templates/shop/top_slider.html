@@ -2,6 +2,6 @@
 {% for product in products %}
 <div class="SlideItMoo_element">
         <a href="{% url 'productdetail' product.id product.slug %}" target="_parent">
-        <img src="{{ product.image.url }}" alt="product 1" /></a>
+        <img src="{{ product.image.url }}" alt="{{product.name}}" title="{{product.slug}}" /></a>
 </div>
 {% endfor %}

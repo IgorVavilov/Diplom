@@ -23,7 +23,7 @@
             {% for product in products %}
         	<div class="col col_14 product_gallery">
             	<a href="{% url 'productdetail' product.id product.slug %}">
-                    <img src="{{ product.image.url }}" alt="{{ product.slug }}" />
+                    <img src="{{ product.image.url }}" alt="{{ product.slug }}" title="{{ product.slug }}" />
                 <h3>{{ product.name|slice:45 }}</h3></a>
                 <p class="product_price">{{ product.price }} Руб.</p>
                 <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
