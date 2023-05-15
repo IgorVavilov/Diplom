@@ -36,3 +36,16 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class ContactMessage(models.Model):
+    sender_name = models.CharField(max_length=200)
+    sender_email = models.EmailField(max_length=500)
+    sender_subject = models.CharField(max_length=250)
+    sender_message = models.TextField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.sender_subject
+
+    class Meta:
+        ordering = ('-created',)

@@ -2,7 +2,7 @@
     <div id="templatemo_menu" class="ddsmoothmenu">
         <ul>
             <li><a href="{% url 'index' %}" class="selected">Главная</a></li>
-            <li><a href="{% url 'product_list_all' %}">Products</a>
+            <li><a href="{% url 'product_list_all' %}">Каталог</a>
                 <ul>
                     {% for c in categories %}
                     <li><a href="{% url 'product_list' c.slug %}">{{ c.name }}</a></li>

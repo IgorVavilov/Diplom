@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
-import random
+from .forms import ContactForm
 
 
 def product_list(request, category_slug=None):
@@ -16,8 +16,9 @@ def product_list(request, category_slug=None):
 
 def productdetail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    random_products = Product.objects.order_by('?')[:3]
     categories = Category.objects.all()
-    context = {'categories': categories, 'product': product}
+    context = {'categories': categories, 'product': product, 'random_products': random_products}
     return render(request, 'shop/product/productdetail.html', context)
 
 
@@ -31,5 +32,11 @@ def index(request):
 def contact(request):
     products = Product.objects.filter(available=True)
     categories = Category.objects.all()
-    context = {'categories': categories, 'products': products}
+    form = ContactForm()
+    context = {'categories': categories, 'products': products, 'form': form}
     return render(request, 'shop/contact.html', context)
+
+
+# def create_message(request):
+#     form = ContactMessage()
+#     return render(request, 'shop/contact.html', {'form': form})
