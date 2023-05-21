@@ -1,0 +1,94 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+{% if page == 'register' %}
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+        	<h2>Регистрация</h2>
+            <div class="col col-13 checkout">
+                <form action="{% url 'register' %}" method="post" class="form auth__form">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  <!-- Input:Text -->
+                  <div class="form__field">
+                    <label for="formInput#text">{{ field.label }}</label><br/>
+                    {{ field }}
+
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+
+                  </div>
+                  {% endfor %}
+
+                  <div class="auth__actions" id="newsletter">
+                    <input class="subscribebtn" id="subscribebtn" type="submit" value="Зарегистрироваться" />
+                  </div>
+                </form>
+
+                <div class="auth__alternative">
+                  <p>Already have an Account?</p>
+                  <a href="{% url 'login' %}">Log In</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+
+{% else %}
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+          <h3>Авторизация</h3>
+          <p>Авторизировавшись, вы сможете управлять своими личными данными, следить за состоянием заказов.</p>
+        </div>
+
+        <form action="{% url 'login' %}" method="post" class="form auth__form">
+            {% csrf_token %}
+          <!-- Input:Email -->
+          <div class="form__field">
+            <label for="formInput#text">Имя пользователя: </label>
+            <input
+              class="input input--text"
+              id="formInput#text"
+              type="text"
+              name="username"
+              placeholder="Введите имя пользователя..."
+            />
+          </div>
+
+          <!-- Input:Password -->
+          <div class="form__field">
+            <label for="formInput#password">Пароль: </label>
+            <input
+              class="input input--password"
+              id="formInput#password"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+            />
+          </div>
+          <div class="auth__actions">
+            <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+            <a href="forgetpassword.html">Forget Password?</a>
+          </div>
+        </form>
+        <div class="auth__alternative">
+          <p>Всё еще нет аккаунта?</p>
+          <a href="{% url 'register' %}">Регистрация</a>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock content%}

@@ -304,3 +304,5 @@ table td { border-bottom: 1px solid #ccc }
 .product_detail img { width: 300px }
 
 .no_margin_right { margin-right: 0 }
+
+.input_field_form {width: 300px}
