@@ -10,22 +10,27 @@ from .forms import CustomUserCreationForm, ProfileForm
 from shop.models import Category
 
 
-def user_profile(request, pk):
-    prof = Profile.objects.get(id=pk)
+def profiles(request):
+    prof = Profile.objects.all()
+    context = {'profiles': prof}
+    return render(request, 'users/index.html', context)
 
-    top_skill = prof.skill_set.exclude(description__exact="")
-    other_skill = prof.skill_set.filter(description="")
 
-    context = {'profile': prof,
-               'top_skill': top_skill,
-               'other_skill': other_skill,
-               }
-    return render(request, 'users/profile.html', context)
+# def user_profile(request, pk):
+#     # prof = Profile.objects.get(id=pk)
+#     prof = Profile.objects.get(id=pk)
+#
+#     # top_skill = prof.skill_set.exclude(description__exact="")
+#     # other_skill = prof.skill_set.filter(description="")
+#
+#     context = {'profile': prof,}
+#     return render(request, 'users/profile_form.html', context)
 
 
 def login_user(request):
+    categories = Category.objects.all()
     if request.user.is_authenticated:
-        return redirect('profiles')
+        return redirect('profile_form')
 
     if request.method == 'POST':
         username = request.POST['username'].lower()
@@ -39,11 +44,11 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect('profiles')
+            return redirect('profile_form')
         else:
             messages.error(request, 'Username or password is incorrect')
-
-    return render(request, 'users/login_register.html')
+    context = {'categories': categories}
+    return render(request, 'users/login_register.html', context)
 
 
 def logout_user(request):
@@ -56,20 +61,33 @@ def register_user(request):
     page = 'register'
     form = CustomUserCreationForm()
     categories = Category.objects.all()
-
+    context = {'page': page, 'form': form, 'categories': categories}
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+            profile = Profile.objects.create(user=user)
 
             messages.success(request, 'User account was created!')
             login(request, user)
-            return redirect('profiles')
+            return render(request, 'users/register_done.html', context)
         else:
             messages.error(request, 'An error has occurred during registration')
-
-    context = {'page': page, 'form': form, 'categories': categories}
     return render(request, 'users/login_register.html', context)
 
+
+@login_required(login_url='login')
+def edit_account(request):
+    profile = request.user.profile # Необходима для отображения информации в форме, которые уже были созданы
+    form = ProfileForm(instance=profile) # передаем данные профиля в форму
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
+
+    context = {'form': form}
+    return render(request, 'users/profile_form.html', context)

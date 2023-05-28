@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
-        labels= {'first_name': 'Name'} # для того чтобы переименовать название поля в форме
+        # labels= {'first_name': 'Name'} # для того чтобы переименовать название поля в форме
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

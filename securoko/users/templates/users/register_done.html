@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+        	<h2>Добро пожаловать {{ new_user.username }}</h2>
+            <div class="col col-13 checkout">
+                <div class="auth__alternative">
+                  <p>Поздравляем с успешной регистрацией. Теперь вы можете <span style="color: red"> <a href="{% url 'login' %}">войти.</a></span></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+
+{% endblock content%}

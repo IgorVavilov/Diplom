@@ -28,13 +28,13 @@
                   {% endfor %}
 
                   <div class="auth__actions" id="newsletter">
-                    <input class="subscribebtn" id="subscribebtn" type="submit" value="Зарегистрироваться" />
+                    <input class="subscribebtn" type="submit" value="Зарегистрироваться" />
                   </div>
                 </form>
 
                 <div class="auth__alternative">
-                  <p>Already have an Account?</p>
-                  <a href="{% url 'login' %}">Log In</a>
+                  <p>У Вас уже есть учетная запись?</p>
+                  <a href="{% url 'login' %}">Войдите</a>
                 </div>
             </div>
 
@@ -52,42 +52,47 @@
         <div id="content">
           <h3>Авторизация</h3>
           <p>Авторизировавшись, вы сможете управлять своими личными данными, следить за состоянием заказов.</p>
+
+            <div class="col col-13 checkout">
+                <form action="{% url 'login' %}" method="post" class="form auth__form">
+                    {% csrf_token %}
+                  <!-- Input:Email -->
+                  <div class="form__field">
+                    <label for="formInput#text">Имя пользователя: </label><br/>
+                    <input
+                      class="input input--text"
+                      id="formInput#text"
+                      type="text"
+                      name="username"
+                      placeholder="Введите имя пользователя..."
+                    />
+                  </div>
+
+                  <!-- Input:Password -->
+                  <div class="form__field">
+                    <label for="formInput#password">Пароль: </label><br/>
+                    <input
+                      class="input input--password"
+                      id="formInput#password"
+                      type="password"
+                      name="password"
+                      placeholder="••••••••"
+                    />
+                  </div>
+                  <div class="auth__actions" id="newsletter">
+                    <input class="subscribebtn" type="submit" value="Войти" />
+                    <a href="forgetpassword.html">Забыл пароль?</a>
+                  </div>
+                <div class="auth__alternative">
+                <p>Всё еще нет аккаунта?</p>
+                <a href="{% url 'register' %}">Зарегистрируйтесь</a>
+                </div>
+                </form>
+
+            </div>
         </div>
 
-        <form action="{% url 'login' %}" method="post" class="form auth__form">
-            {% csrf_token %}
-          <!-- Input:Email -->
-          <div class="form__field">
-            <label for="formInput#text">Имя пользователя: </label>
-            <input
-              class="input input--text"
-              id="formInput#text"
-              type="text"
-              name="username"
-              placeholder="Введите имя пользователя..."
-            />
-          </div>
-
-          <!-- Input:Password -->
-          <div class="form__field">
-            <label for="formInput#password">Пароль: </label>
-            <input
-              class="input input--password"
-              id="formInput#password"
-              type="password"
-              name="password"
-              placeholder="••••••••"
-            />
-          </div>
-          <div class="auth__actions">
-            <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
-            <a href="forgetpassword.html">Forget Password?</a>
-          </div>
-        </form>
-        <div class="auth__alternative">
-          <p>Всё еще нет аккаунта?</p>
-          <a href="{% url 'register' %}">Регистрация</a>
-        </div>
+        <div class="cleaner"></div>
     </div>
 {% endif %}
 
