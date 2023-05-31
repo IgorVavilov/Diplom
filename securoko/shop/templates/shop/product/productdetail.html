@@ -21,7 +21,11 @@
                     </tr>
                     <tr>
                         <td height="30">Наличие:</td>
-                        <td>In Stock</td>
+                        {% if product.stock > 0 %}
+                        <td>несколько</td>
+                        {% else %}
+                        <td>под заказ</td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td height="30">Модель:</td>

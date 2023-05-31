@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, ProfileForm
-from shop.models import Category
+from shop.models import Category, Product
 
 
 def profiles(request):
@@ -44,7 +44,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect('profile_form')
+            return redirect('index')
         else:
             messages.error(request, 'Username or password is incorrect')
     context = {'categories': categories}
@@ -65,17 +65,30 @@ def register_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            profile = Profile.objects.create(user=user)
+            new_user = form.save(commit=False)
+            new_user.username = new_user.username.lower()
+            new_user.save()
+            profile = Profile.objects.create(user=new_user)
 
             messages.success(request, 'User account was created!')
-            login(request, user)
+            login(request, new_user)
             return render(request, 'users/register_done.html', context)
         else:
             messages.error(request, 'An error has occurred during registration')
     return render(request, 'users/login_register.html', context)
+
+
+@login_required(login_url='login')
+def user_account(request):
+    prof = request.user.profile
+    categories = Category.objects.all()
+    random_products = Product.objects.order_by('?')[:2]
+    context = {
+        'profile': prof,
+        'categories': categories,
+        'random_products': random_products
+    }
+    return render(request, 'users/account.html', context)
 
 
 @login_required(login_url='login')

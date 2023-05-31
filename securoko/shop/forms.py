@@ -7,10 +7,10 @@ class ContactForm(ModelForm):
     class Meta:
         model = ContactMessage
         fields = ['sender_name', 'sender_email', 'sender_subject', 'sender_message']
-        labels = {'sender_name': 'Name:',
+        labels = {'sender_name': 'ФИО:',
                   'sender_email': 'E-mail:',
-                  'sender_subject': 'Subject:',
-                  'sender_message': 'Message:'}
+                  'sender_subject': 'Тема:',
+                  'sender_message': 'Сообщение:'}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,0 +1,33 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+        	<h2>Мой аккаунт</h2>
+
+            <div class="col col_13 account">
+                <a href="{% url 'profile_form' %}">Мой профиль</a>
+
+            </div>
+            <div class="col col_13 account">
+                <a href="#">Моя корзина</a>
+
+            </div>
+		</div>
+            <div class="cleaner divider"></div>
+
+			<div class="cleaner h30"></div>
+
+
+
+
+        <div class="cleaner h30"></div>
+
+        </div> <!-- END of content -->
+
+{% endblock content %}

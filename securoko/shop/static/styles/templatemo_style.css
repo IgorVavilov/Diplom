@@ -318,3 +318,39 @@ table td { border-bottom: 1px solid #ccc }
 #site_title_footer p a {display: block;
                     padding: 55px 0 0 85px;
                     background: url(../images/logo_securoko.png) no-repeat top right}
+
+.account {
+    padding-top: 40px;
+	padding-bottom: 40px;
+	text-align: center;
+	font-weight: 700;
+	border: solid 1px;
+	border-color: #eaebec;
+	background-color: #eaebec;
+}
+
+.account a {
+    text-decoration: none;
+}
+
+.account a:hover {
+    color: #333;
+    font-weight: 900;
+}
+
+.submit {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #21bdd0;
+    background: #e9e9e9;
+    cursor: pointer;
+    border: none;
+    }
+
+.submit:hover {
+    background: #333;
+    text-decoration: none;
+    cursor: pointer;
+    }

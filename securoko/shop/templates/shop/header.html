@@ -8,8 +8,13 @@
 
         <div id="header_right">
             <ul id="language">
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                <li><a href="{% url 'account' %}">Мой аккаунт</a></li>
+                {% else %}
                 <li><a href="{% url 'login' %}">Войти</a></li>
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
             </ul>
             <div class="cleaner"></div>
             <div id="templatemo_search">
