@@ -11,6 +11,4 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('profile_form/', views.edit_account, name='profile_form'),
     path('account/', views.user_account, name='account'),
-
-    path('article/<slug:article_slug>/', ShowArticle.as_view(), name='article')
 ]

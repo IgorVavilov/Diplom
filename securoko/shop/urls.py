@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+from .views import *
 
 
 urlpatterns = [
@@ -8,4 +10,8 @@ urlpatterns = [
     path('product_list/<str:category_slug>', views.product_list, name='product_list'),
     path('productdetail/<str:id>/<str:slug>', views.productdetail, name='productdetail'),
     path('contact', views.contact, name='contact'),
+
+    path('article/<slug:article_slug>/', ShowArticle.as_view(), name='article'),
+    path('category_article/<slug:cat_slug>/', CategoryArticle.as_view(), name='category_article'),
+
 ]

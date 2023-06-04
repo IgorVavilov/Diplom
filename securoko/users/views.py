@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView, FormView
+
 from .forms import CustomUserCreationForm, ProfileForm
 from shop.models import Category, Product
 
@@ -107,37 +107,3 @@ def edit_account(request):
     context = {'form': form, 'categories': categories, 'random_products': random_products}
     return render(request, 'users/profile_form.html', context)
 
-
-class ShowArticle(DetailView):
-    model = Article
-    template_name = 'users/article.html'
-    slug_url_kwarg = 'article_slug'
-    context_object_name = 'article'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = context['article']
-        # context['menu'] = menu
-        return context
-        # c_def = self.get_user_context(title=context['article'])
-        # return dict(list(context.items()) + list(c_def.items()))
-
-
-class CategoryArticle(ListView):
-    model = Article
-    template_name = "shop/index.html"
-    context_object_name = 'articles'
-    allow_empty = False
-
-    def get_queryset(self):
-        return Article.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Категрия - ' + str(context['articles'][0].cat)
-        context['cat_selected'] = context['articles'][0].cat_id
-        # context['menu'] = menu
-        return context
-        # c = Category.objects.get(slug=self.kwargs['cat_slug'])
-        # c_def = self.get_user_context(title='Категория - ' + str(c.name), cat_selected=c.pk)
-        # return dict(list(context.items()) + list(c_def.items()))
