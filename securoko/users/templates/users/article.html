@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+
+    {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+
+            <div class="cleaner h30"></div>
+
+            <h5><strong>{{ article.title }}</strong></h5>
+            <p>{{ article.content|linebreaks }}</p>
+
+            <div class="cleaner h50"></div>
+
+            {% include 'shop/random_product.html' %}
+
+            <div class="cleaner"></div>
+        </div> <!-- END of content -->
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock content %}

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .models import Profile
+from .models import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from .forms import CustomUserCreationForm, ProfileForm
 from shop.models import Category, Product
 
@@ -82,7 +83,7 @@ def register_user(request):
 def user_account(request):
     prof = request.user.profile
     categories = Category.objects.all()
-    random_products = Product.objects.order_by('?')[:2]
+    random_products = Product.objects.order_by('?')[:1]
     context = {
         'profile': prof,
         'categories': categories,
@@ -95,12 +96,48 @@ def user_account(request):
 def edit_account(request):
     profile = request.user.profile # Необходима для отображения информации в форме, которые уже были созданы
     form = ProfileForm(instance=profile) # передаем данные профиля в форму
-
+    categories = Category.objects.all()
+    random_products = Product.objects.order_by('?')[:1]
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('account')
 
-    context = {'form': form}
+    context = {'form': form, 'categories': categories, 'random_products': random_products}
     return render(request, 'users/profile_form.html', context)
+
+
+class ShowArticle(DetailView):
+    model = Article
+    template_name = 'users/article.html'
+    slug_url_kwarg = 'article_slug'
+    context_object_name = 'article'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['article']
+        # context['menu'] = menu
+        return context
+        # c_def = self.get_user_context(title=context['article'])
+        # return dict(list(context.items()) + list(c_def.items()))
+
+
+class CategoryArticle(ListView):
+    model = Article
+    template_name = "shop/index.html"
+    context_object_name = 'articles'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Article.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Категрия - ' + str(context['articles'][0].cat)
+        context['cat_selected'] = context['articles'][0].cat_id
+        # context['menu'] = menu
+        return context
+        # c = Category.objects.get(slug=self.kwargs['cat_slug'])
+        # c_def = self.get_user_context(title='Категория - ' + str(c.name), cat_selected=c.pk)
+        # return dict(list(context.items()) + list(c_def.items()))

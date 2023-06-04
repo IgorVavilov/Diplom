@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
+from users.models import *
 from .forms import ContactForm
 
 
@@ -19,7 +20,8 @@ def productdetail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     random_products = Product.objects.order_by('?')[:3]
     categories = Category.objects.all()
-    context = {'categories': categories, 'product': product, 'random_products': random_products}
+    articles = Article.objects.all()
+    context = {'categories': categories, 'product': product, 'random_products': random_products, 'articles': articles}
     return render(request, 'shop/product/productdetail.html', context)
 
 
