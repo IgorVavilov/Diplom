@@ -26,7 +26,14 @@
                     <img src="{{ product.image.url }}" alt="{{ product.slug }}" title="{{ product.slug }}" />
                 <h3>{{ product.name|slice:45 }}</h3></a>
                 <p class="product_price">{{ product.price }} Руб.</p>
-                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+                <div>
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                        {{ cart_product_form }}
+                        {% csrf_token %}
+                        <div class="cleaner h20"></div>
+                        <p><input type="submit" value="В корзину" class="add_to_cart"></p>
+                    </form>
+                </div>
             </div>
             {% endfor %}
 

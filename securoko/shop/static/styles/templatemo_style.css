@@ -121,7 +121,14 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 #language { margin: 0; padding: 0; list-style: none }
 #language li { float: right; display: block; margin-left: 5px }
 
-#templatemo_search { clear: both; margin-top: 5px; width: 232px; height: 31px; background: url(../images/templatemo_searchbox.png) }
+#templatemo_search {
+    clear: both;
+    margin-top: 5px;
+    width: 232px;
+    height: 31px;
+    background: url(../images/templatemo_searchbox.png)
+}
+
 #templatemo_search form {
 	margin: 0;
 	padding: 0;
@@ -243,10 +250,15 @@ table td { border-bottom: 1px solid #ccc }
 
 .add_to_cart {
 	display: inline-block;
+	border: none;
 	padding-right: 30px;
 	margin-bottom: 30px;
+	cursor: pointer;
+	color: #666;
 	background: url(../images/cart.png) no-repeat right center	
 }
+
+.
 
 #newsletter {
 	margin-bottom: 60px;
@@ -354,3 +366,27 @@ table td { border-bottom: 1px solid #ccc }
     text-decoration: none;
     cursor: pointer;
     }
+
+.cart img {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	height: 100px;
+	width: auto;
+}
+
+.header_menu ul{
+    margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.header_menu ul li{
+    display: inline-block;
+}
+
+.header_menu ul li a{
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+    font-weight: 700;
+}

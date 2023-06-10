@@ -35,10 +35,22 @@
                         <td height="30">Производитель:</td>
                         <td>{{ product.manufacturer }}</td>
                     </tr>
-                    <tr><td height="30">Количество</td><td><input type="text" value="1" style="width: 20px; text-align: right" /></td></tr>
+
+
+
+                            <!-- <input type="text" value="1" style="width: 20px; text-align: right" /> -->
+
                 </table>
+                <div>
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                        {{ cart_product_form }}
+                        {% csrf_token %}
+                        <div class="cleaner h20"></div>
+                        <p><input type="submit" value="В корзину" class="add_to_cart"></p>
+                    </form>
+                </div>
                 <div class="cleaner h20"></div>
-                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
+                <!-- <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a> -->
 			</div>
             <div class="cleaner h30"></div>
 

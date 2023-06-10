@@ -6,8 +6,8 @@
         	<h1><a href="{% url 'index' %}"></a></h1>
         </div>
 
-        <div id="header_right">
-            <ul id="language">
+        <div id="header_right" class="header_menu">
+            <ul>
                 {% if request.user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Выйти</a></li>
                 <li><a href="{% url 'account' %}">Мой аккаунт</a></li>
@@ -15,6 +15,19 @@
                 <li><a href="{% url 'login' %}">Войти</a></li>
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
                 {% endif %}
+                <li>
+                    {% with total_items=cart|length %}
+                        {% if cart|length > 0 %}
+                            В корзине:
+                            <a href='{% url "cart_detail" %}'>
+                                {{ total_items }} ед. на
+                                {{ cart.get_total_price }} руб.
+                            </a>
+                        {% else %}
+                            Ваша корзина пуста.
+                        {% endif %}
+                    {% endwith %}
+                </li>
             </ul>
             <div class="cleaner"></div>
             <div id="templatemo_search">

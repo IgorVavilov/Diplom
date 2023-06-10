@@ -4,6 +4,7 @@ from users.models import *
 from .forms import ContactForm
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from .utils import *
+from cart.forms import CartAddProductForm
 
 
 
@@ -12,10 +13,11 @@ def product_list(request, category_slug=None):
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
     random_products = Product.objects.order_by('?')[:2]
+    cart_product_form = CartAddProductForm()
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
-    context = {'category': category, 'categories': categories, 'products': products, 'random_products': random_products}
+    context = {'category': category, 'categories': categories, 'products': products, 'random_products': random_products, 'cart_product_form': cart_product_form}
     return render(request, 'shop/product/products.html', context)
 
 
@@ -24,7 +26,10 @@ def productdetail(request, id, slug):
     random_products = Product.objects.order_by('?')[:3]
     categories = Category.objects.all()
     articles = Article.objects.all()
-    context = {'categories': categories, 'product': product, 'random_products': random_products, 'articles': articles}
+    cart_product_form = CartAddProductForm()
+    context = {'categories': categories, 'product': product, 'random_products': random_products,
+               'articles': articles, 'cart_product_form': cart_product_form}
+
     return render(request, 'shop/product/productdetail.html', context)
 
 
@@ -75,7 +80,7 @@ class CategoryArticle(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Категрия - ' + str(context['articles'][0].cat)
+        # context['title'] = 'Категрия - ' + str(context['articles'][0].cat)
         context['cat_selected'] = context['articles'][0].cat_id
         # context['menu'] = menu
         return context
