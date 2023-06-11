@@ -1,0 +1,72 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+        <div id="product_slider">
+    		<div id="SlideItMoo_outer">
+                <div id="SlideItMoo_inner">
+                    <div id="SlideItMoo_items">
+                        {% include 'shop/top_slider.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+       		<h2>Оформить заказ</h2>
+            <h5><strong>Информация для Счета</strong></h5>
+            <div class="col col_13 checkout">
+               <form action="." method="post" class="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p><input type="submit" value="Заказать" class="order_submit"></p>
+                </form>
+            </div>
+
+            <div class="col col_13 order_info">
+                 <ul>
+                     <h3 class="order_info_title">Ваш заказ</h3>
+				    {% for item in cart %}
+                    <li>
+                        {{ item.quantity }}x {{ item.product.name }}
+                        <p></p>
+                        <p class="item_price">- {{ item.total_price }} руб.</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p class="total_price float_r">Всего: {{ cart.get_total_price }} руб.</p>
+            </div>
+
+            <div class="cleaner h50"></div>
+            <h3>Shopping Cart</h3>
+            <h4>TOTAL: <strong>$140</strong></h4>
+			<p><input type="checkbox" />I have accepted the <a href="#">Terms of Use</a>.</p>
+            <table style="border:1px solid #CCCCCC;" width="100%">
+                <tr>
+                    <td height="80px"> <img src="images/paypal.gif" alt="paypal" /></td>
+                    <td width="400px;" style="padding: 0px 20px;">Recommended if you have a PayPal account. Fastest delivery time.
+                    </td>
+                    <td><a href="#" class="more">PAYPAL</a></td>
+                </tr>
+                <tr>
+                    <td  height="80px"><img src="images/2co.gif" alt="paypal" />
+                    </td>
+                    <td  width="400px;" style="padding: 0px 20px;">2Checkout.com, Inc. is an authorized retailer of goods and services provided by Template-Guide.com. 2CheckOut accepts customer orders via online checks, Visa, MasterCard, Discover, American Express, Diners, JCB and debit cards with the Visa, Mastercard logo.
+                    </td>
+                    <td><a href="#" class="more">2CHECKOUT</a></td>
+                </tr>
+            </table>
+
+		</div>
+
+
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock %}

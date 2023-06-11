@@ -9,7 +9,7 @@
     {% include 'shop/sidebar.html' %}
 
         <div id="content">
-
+            <h2>Ваша корзина</h2>
             <div class="cleaner h30"></div>
 
                     <table width="700px" cellspacing="0" cellpadding="5">
@@ -51,14 +51,16 @@
 					</table>
                     <div style="float:right; width: 215px; margin-top: 20px;">
 
-                        <div class="checkout"><a href="checkout.html" class="more">Proceed to Checkout</a></div>
+                        <div class="checkout">
+                            <a href="{% url 'order_create' %}" class="more">Оформить заказ</a>
+                        </div>
                         <div class="cleaner h20"></div>
                         <div class="continueshopping"><a href="javascript:history.back()" class="more">Продолжить покупки</a></div>
 
                     </div>
 
             <div class="cleaner h50"></div>
-
+            <h2>Cлучайный подбор</h2>
             {% include 'shop/random_product.html' %}
 
             <div class="cleaner"></div>

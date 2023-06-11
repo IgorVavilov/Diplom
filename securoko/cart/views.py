@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from shop.models import *
 
 
 @require_POST
@@ -27,5 +28,8 @@ def cart_remove(request, product_id):
 
 def shoppingcart(request):
     cart = Cart(request)
-    return render(request, 'cart/shoppingcart.html', {'cart': cart})
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    random_products = Product.objects.order_by('?')[:3]
+    return render(request, 'cart/shoppingcart.html', {'cart': cart, 'categories': categories, 'products': products, 'random_products': random_products})
 

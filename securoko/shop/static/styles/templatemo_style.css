@@ -22,8 +22,8 @@ body {
 a, a:link, a:visited { color: #666; font-weight: normal; text-decoration: none }
 a:hover { text-decoration: underline; }
 
-a.more { display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: bold; color: #21bdd0; background: #e9e9e9 }
-a.more:hover { background: #333; text-decoration: none }
+a.more, .order_submit{ display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: bold; color: #21bdd0; background: #e9e9e9 }
+a.more:hover, .order_submit:hover{ background: #333; text-decoration: none }
 
 p { margin: 0 0 10px 0; padding: 0; }
 img { border: none; }
@@ -258,8 +258,6 @@ table td { border-bottom: 1px solid #ccc }
 	background: url(../images/cart.png) no-repeat right center	
 }
 
-.
-
 #newsletter {
 	margin-bottom: 60px;
 }
@@ -389,4 +387,36 @@ table td { border-bottom: 1px solid #ccc }
     color: #999;
     text-decoration: none;
     font-weight: 700;
+}
+.checkout{
+    margin-right: 20px;
+}
+
+.checkout p input{
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    line-height: 18px;
+    padding: 3px;
+    width: 300px;
+}
+
+.order_submit{
+    cursor: pointer;
+    width: 40px;
+}
+
+.order_info{
+    background: #e9e9e9;
+    padding-right: 10px;
+}
+
+.item_price{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.total_price{
+    font-size: 14px;
+    font-weight: bold;
 }

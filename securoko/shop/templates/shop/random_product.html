@@ -7,8 +7,6 @@
         <img src="{{ product.image.url }}" alt="{{product.name}}" />
     <p>{{ product.name|slice:45 }}</p></a>
     <p class="product_price">{{ product.price }} Руб.</p>
-    <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
 </div>
 {% endfor %}
-
 <a href="{% url 'product_list_all' %}" class="more float_r">Каталог</a>

@@ -1,0 +1,32 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+
+<div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+    <div id="templatemo_main">
+        <div id="product_slider">
+    		<div id="SlideItMoo_outer">
+                <div id="SlideItMoo_inner">
+                    <div id="SlideItMoo_items">
+                        {% include 'shop/top_slider.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="cleaner"></div>
+        </div>
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+       		<h2>Заказ оформлен</h2>
+            <h1>Спасибо</h1>
+                <p>Ваш заказ успешно оформлен. Номер вашего заказа
+        <strong>{{ order.id }}</strong>.</p>
+            <p>В ближайшее время с Вами свяжется наш менеджер по указанному вами телефону.</p>
+
+        </div>
+
+        <div class="cleaner"></div>
+    </div> <!-- END of main -->
+
+{% endblock %}
