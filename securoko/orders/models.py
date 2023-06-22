@@ -1,8 +1,11 @@
 from django.db import models
 from shop.models import Product
+from django.contrib.auth.models import User
+from users.models import Profile
 
 
 class Order(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     email = models.EmailField()
@@ -10,7 +13,7 @@ class Order(models.Model):
     postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
     city = models.CharField(max_length=100, verbose_name='Город')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated = models.DateTimeField(auto_now_add=True, verbose_name='Дата обнолвения')
+    updated = models.DateTimeField(auto_now_add=True, verbose_name='Дата обновления')
     paid = models.BooleanField(default=False, verbose_name='Оплата')
 
     class Meta:
@@ -18,9 +21,8 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
-
     def __str__(self):
-        return 'Order {}'.format(seld.id)
+        return 'Заказ {}'.format(self.id)
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
@@ -37,5 +39,3 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
-
-

@@ -77,6 +77,17 @@ ddsmoothmenu.init({
     {% include 'shop/navbar.html' %}
 
 
+        {% if messages %}
+            {% for message in messages %}
+            <div style="text-align: center">
+                <div class="alert alert--{{message.tags}}">
+                    <p class="alert__message">{{message}}</p>
+                    <button class="alert__close">x</button>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+
     {% block content %}
 
     {% endblock %}

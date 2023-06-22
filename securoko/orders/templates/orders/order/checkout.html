@@ -34,7 +34,7 @@
                      <h3 class="order_info_title">Ваш заказ</h3>
 				    {% for item in cart %}
                     <li>
-                        {{ item.quantity }}x {{ item.product.name }}
+                        {{ item.product.name }} - {{ item.quantity }} шт.
                         <p></p>
                         <p class="item_price">- {{ item.total_price }} руб.</p>
                     </li>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="cleaner h50"></div>
-            <h3>Shopping Cart</h3>
+            <!-- <h3>Shopping Cart</h3>
             <h4>TOTAL: <strong>$140</strong></h4>
 			<p><input type="checkbox" />I have accepted the <a href="#">Terms of Use</a>.</p>
             <table style="border:1px solid #CCCCCC;" width="100%">
@@ -61,7 +61,7 @@
                     </td>
                     <td><a href="#" class="more">2CHECKOUT</a></td>
                 </tr>
-            </table>
+            </table> -->
 
 		</div>
 

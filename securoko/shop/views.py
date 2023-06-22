@@ -65,7 +65,7 @@ class ShowArticle(DataMixin, DetailView):
         # context['title'] = context['article']
         # # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title=Category)
+        c_def = self.get_user_context(title="F,hfdf")
         return dict(list(context.items()) + list(c_def.items()))
 
 

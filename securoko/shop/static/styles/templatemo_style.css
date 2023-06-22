@@ -420,3 +420,7 @@ table td { border-bottom: 1px solid #ccc }
     font-size: 14px;
     font-weight: bold;
 }
+
+.order_table_detail td{
+    text-align: left;
+}

@@ -39,7 +39,7 @@ def login_user(request):
         try:
             user = User.objects.get(username=username)
         except ObjectDoesNotExist:
-            messages.error(request, 'Username does not exist')
+            messages.error(request, 'Пользователь не существует')
 
         user = authenticate(request, username=username, password=password)
 
@@ -47,14 +47,14 @@ def login_user(request):
             login(request, user)
             return redirect('index')
         else:
-            messages.error(request, 'Username or password is incorrect')
+            messages.error(request, 'Пользователь либо пароль не верны')
     context = {'categories': categories}
     return render(request, 'users/login_register.html', context)
 
 
 def logout_user(request):
     logout(request)
-    messages.info(request, "User was logged out!")
+    messages.info(request, "Пользователь успешно вышел!")
     return redirect('login')
 
 
@@ -69,9 +69,15 @@ def register_user(request):
             new_user = form.save(commit=False)
             new_user.username = new_user.username.lower()
             new_user.save()
-            profile = Profile.objects.create(user=new_user)
+            profile = Profile.objects.create(
+                user=new_user,
+                username=new_user.username,
+                email=new_user.email,
+                first_name=new_user.first_name,
+                last_name=new_user.last_name
+            )
 
-            messages.success(request, 'User account was created!')
+            messages.success(request, 'Учетная запись успешна создана')
             login(request, new_user)
             return render(request, 'users/register_done.html', context)
         else:
