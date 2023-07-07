@@ -31,9 +31,9 @@
             </ul>
             <div class="cleaner"></div>
             <div id="templatemo_search">
-                <form action="#" method="get">
-                  <input type="text" value="Search" name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
-                  <input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
+                <form id="search" action="{% url 'product_list_all' %}" method="get">
+                  <input type="text" value="{{search}}" name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+                  <input type="submit" value="" alt="search" id="searchbutton" title="search" class="sub_btn"  />
                 </form>
             </div>
          </div> <!-- END -->

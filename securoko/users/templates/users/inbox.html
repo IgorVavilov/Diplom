@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+
+    <div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+<div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+            <h2>Сообщения</h2>
+
+            <div class="content-box">
+              <h3 class="inbox__title">Новые сообщения(<span>{{ unread_count }}</span>)</h3>
+              <ul class="messages">
+                {% for message in message_request %}
+                  {% if message.is_read == False %}
+                    <li class="message message--unread">
+                  {% else %}
+                    <li class="message">
+                  {% endif %}
+                      <a href="{% url 'message' message.id %}">
+                        <span class="message__author">{{message.name}}</span>
+                        <span class="message__subject">{{message.subject}}</span>
+                        <span class="message__date">{{message.created}}</span>
+                      </a>
+                    </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+        </div> <!-- END of content -->
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+
+{% endblock %}

@@ -1,19 +1,23 @@
 {% load static %}
-{% load shop_tags %}
+
 
     <div id="templatemo_footer">
     	<div class="col col_16">
         	<h4>Категории</h4>
             <ul class="footer_menu">
-			    {% for c in categories %}
-			    <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+			    {% for category in categories %}
+                    <li><a href="{% url 'product_list' category.slug %}">{{ category.name }}</a></li>
                 {% endfor %}
 		  </ul>
         </div>
         <div class="col col_16">
         	<h4>Пользователям</h4>
             <ul class="footer_menu">
-                {% show_articles %}
+                {% for article in articles %}
+                    {% if article.cat_id == 1 %}
+                        <li><a href="{% url 'article' article.slug %}">{{ article.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
 			</ul>
         </div>
         <div class="col col_16">
@@ -26,10 +30,12 @@
         <div class="col col_16">
         	<h4>О нас</h4>
             <ul class="footer_menu">
-
-            	<li><a href="#">О компании</a></li>
-                <li><a href="#">Партнерам</a></li>
-                <li><a href="#">Контакты</a></li>
+                {% for article in articles %}
+                    {% if article.cat_id == 2 %}
+                        <li><a href="{% url 'article' article.slug %}">{{ article.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li><a href="{% url 'contact' %}">Контакты</a></li>
 		  </ul>
         </div>
         <div class="col col_13 no_margin_right" id="site_title_footer">

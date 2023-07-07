@@ -12,3 +12,10 @@ def show_articles(sort=None, cat_selected=0):
         cats = Article.objects.order_by(sort)
 
     return {"cats": cats, "cat_selected": cat_selected}
+
+
+@register.inclusion_tag('shop/list_articles.html')
+def show_articles_user():
+    cats = CategoryArticle.objects.all()
+
+    return {"cats": cats}

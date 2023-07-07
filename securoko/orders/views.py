@@ -3,6 +3,7 @@ from .models import OrderItem, Order
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from shop.models import *
+from shop.utils import user_content
 from django.contrib.auth import logout, login, authenticate
 from users.models import Profile
 
@@ -62,12 +63,12 @@ def order_create(request):
 
 
 def profile_orders(request, pk):
+    categories, random_categories, products, articles, random_products = user_content(request)
     orders = Order.objects.filter(owner=request.user.profile).order_by('id')
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
     random_products = Product.objects.order_by('?')[:2]
     context = {'orders': orders,
                'categories': categories,
                'products': products,
-               'random_products': random_products}
+               'random_products': random_products,
+               'articles': articles}
     return render(request, 'orders/order/profile_orders.html', context)

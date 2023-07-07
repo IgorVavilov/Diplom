@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 from users.models import Profile
 
 
+
 class Order(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     email = models.EmailField()
+    phone_number = models.CharField('Телефон', max_length=13, default='', blank=True, null=True)
     address = models.CharField(max_length=250, verbose_name='Адрес')
     postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
     city = models.CharField(max_length=100, verbose_name='Город')
@@ -22,7 +24,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return 'Заказ {}'.format(self.id)
+        return 'Заказ # {}'.format(self.id)
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())

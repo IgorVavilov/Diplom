@@ -36,10 +36,15 @@
                 </div>
             </div>
             {% endfor %}
+
+            <div class="cleaner h20"></div>
+
+            {% include 'shop/pagination.html' with queryset=products custom_range=custom_range %}
         </div>
         <!-- END of content -->
 
         <div class="cleaner"></div>
+
     </div> <!-- END of main -->
 
 {% endblock %}

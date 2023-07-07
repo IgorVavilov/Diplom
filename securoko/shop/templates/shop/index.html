@@ -6,7 +6,7 @@
     	<img src="{% static 'images/main_image.png' %}" alt="Image 01" />
     	<h1>Добро пожаловать</h1>
         <p>Мы надеемся, что вы всегда сможете подобрать себе необходимое оборудование для безопасности вашего дома.</p>
-        <a href="product_list" class="buy_now">Показать Весь Каталог</a>
+        <a href="{% url 'product_list_all' %}" class="buy_now">Показать Весь Каталог</a>
     </div> <!-- END of middle -->
 
     <div id="templatemo_main_top"></div>
@@ -24,19 +24,34 @@
 
         {% include 'shop/sidebar.html' %}
 
-        <div id="content">
-            {% for product in products %}
-        	<div class="col col_14 product_gallery">
-            	<a href="{% url 'productdetail' product.id product.slug %}">
-                    <img src="{{ product.image.url }}" alt="{{product.name}}" />
-                <h3>{{ product.name|slice:45 }}</h3></a>
-                <p class="product_price">{{ product.price }} Руб.</p>
-                <a href="shoppingcart.html" class="add_to_cart">Add to Cart</a>
-            </div>
-            {% endfor %}
 
-        </div>
-        <!-- END of content -->
+        <div id="content">
+            {% for category in random_categories %}
+                <h2>{{ category }}</h2>
+                    {% for product in category.products.all|slice:3 %}
+                        <div class="col col_14 product_gallery">
+                            <a href="{% url 'productdetail' product.id product.slug %}">
+                                <img src="{{ product.image.url }}" alt="{{product.name}}" />
+                            <h3>{{ product.name|slice:45 }}</h3></a>
+                            <p class="product_price">{{ product.price }} Руб.</p>
+                            <div>
+                                <form action="{% url 'cart_add' product.id %}" method="post">
+                                    {{ cart_product_form }}
+                                    {% csrf_token %}
+                                    <div class="cleaner h20"></div>
+                                    <p><input type="submit" value="В корзину" class="add_to_cart"></p>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                <a href="{% url 'product_list' category.slug %}" class="more float_r">Показать все</a>
+                <div class="cleaner h50"></div>
+            {% endfor %}
+			<div class="cleaner h50"></div>
+
+            <div class="cleaner"></div>
+        </div> <!-- END of content -->
+
         <div class="cleaner"></div>
     </div> <!-- END of main -->
 

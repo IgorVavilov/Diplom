@@ -3,18 +3,15 @@ from .models import *
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
     list_display = ['name', 'slug']
-    prepopulated_field = {'slug': ('name',)}
-
-
-admin.site.register(Category, CategoryAdmin)
 
 
 class ProductAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
     list_display = ['name', 'slug', 'manufacturer', 'price', 'stock', 'available', 'created', 'updated']
     list_filter = ['manufacturer', 'available', 'created', 'updated']
     list_editable = ['price', 'stock', 'available']
-    prepopulated_field = {'slug': ('name',)}
 
 
 class CategoryArticleAdmin(admin.ModelAdmin):
@@ -41,7 +38,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
     get_html_photo.short_description = 'Миниатюра'
 
+
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ContactMessage)
 admin.site.register(CategoryArticle, CategoryArticleAdmin)
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Category, CategoryAdmin)

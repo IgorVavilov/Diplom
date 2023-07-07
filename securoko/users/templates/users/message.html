@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+
+    <div class="cleaner h20"></div>
+    <div id="templatemo_main_top"></div>
+<div id="templatemo_main">
+
+        {% include 'shop/sidebar.html' %}
+
+        <div id="content">
+
+            <div class="content-box">
+              <div class="message">
+                <h2 class="message__subject">{{ message.sender_subject }}</h2>
+                  <a href="profile.html" class="message__author">{{ message.name }}</a>
+                  <p class="message__date">{{ message.created }}</p>
+                  <div class="message__body">
+                    {{ message.sender_message|linebreaksbr }}
+                  </div>
+                  <a href="{% url 'inbox' %}" class="more float_r">Назад</a>
+              </div>
+            </div>
+
+        </div> <!-- END of content -->
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from users.models import Profile
 
 
 class Category(models.Model):
@@ -18,7 +19,7 @@ class Category(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
     name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
     image = models.ImageField(upload_to='product/%Y/%m/%d', blank=True)
     manufacturer = models.CharField(max_length=200, db_index=True, null=True)
     model = models.CharField(max_length=200, db_index=True, null=True)
@@ -33,23 +34,11 @@ class Product(models.Model):
     class Meta:
         ordering = ('name',)
         index_together = (('id', 'slug'),)
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
     def __str__(self):
         return self.name
-
-
-class ContactMessage(models.Model):
-    sender_name = models.CharField(max_length=200)
-    sender_email = models.EmailField(max_length=500)
-    sender_subject = models.CharField(max_length=250)
-    sender_message = models.TextField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.sender_subject
-
-    class Meta:
-        ordering = ('-created',)
 
 
 class CategoryArticle(models.Model):
@@ -59,8 +48,8 @@ class CategoryArticle(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('category', kwargs={'cat_slug': self.slug})
+    # def get_absolute_url(self):
+    #     return reverse('category', kwargs={'cat_slug': self.slug})
 
     class Meta:
         verbose_name = 'Категорию статьи'
@@ -75,13 +64,13 @@ class Article(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-    cat = models.ForeignKey('CategoryArticle', on_delete=models.PROTECT, verbose_name='Категория')
+    cat = models.ForeignKey(CategoryArticle, on_delete=models.PROTECT, verbose_name='Категория', related_name='cat')
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('article', kwargs={'article_slug': self.slug})
+    # def get_absolute_url(self):
+    #     return reverse('article', kwargs={'article_slug': self.slug})
 
     class Meta:
         verbose_name = 'Статья'

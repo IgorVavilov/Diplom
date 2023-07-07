@@ -9,23 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import CustomUserCreationForm, ProfileForm
 from shop.models import Category, Product
+from .forms import ContactForm
 
 
 def profiles(request):
     prof = Profile.objects.all()
     context = {'profiles': prof}
     return render(request, 'users/index.html', context)
-
-
-# def user_profile(request, pk):
-#     # prof = Profile.objects.get(id=pk)
-#     prof = Profile.objects.get(id=pk)
-#
-#     # top_skill = prof.skill_set.exclude(description__exact="")
-#     # other_skill = prof.skill_set.filter(description="")
-#
-#     context = {'profile': prof,}
-#     return render(request, 'users/profile_form.html', context)
 
 
 def login_user(request):
@@ -74,14 +64,15 @@ def register_user(request):
                 username=new_user.username,
                 email=new_user.email,
                 first_name=new_user.first_name,
-                last_name=new_user.last_name
+                last_name=new_user.last_name,
+                phone_number=new_user.phone_number,
             )
 
             messages.success(request, 'Учетная запись успешна создана')
             login(request, new_user)
             return render(request, 'users/register_done.html', context)
         else:
-            messages.error(request, 'An error has occurred during registration')
+            messages.error(request, 'Произошла ошибка во время регистрации')
     return render(request, 'users/login_register.html', context)
 
 
@@ -100,8 +91,8 @@ def user_account(request):
 
 @login_required(login_url='login')
 def edit_account(request):
-    profile = request.user.profile # Необходима для отображения информации в форме, которые уже были созданы
-    form = ProfileForm(instance=profile) # передаем данные профиля в форму
+    profile = request.user.profile  # Необходима для отображения информации в форме, которые уже были созданы
+    form = ProfileForm(instance=profile)  # передаем данные профиля в форму
     categories = Category.objects.all()
     random_products = Product.objects.order_by('?')[:1]
     if request.method == 'POST':
@@ -109,7 +100,70 @@ def edit_account(request):
         if form.is_valid():
             form.save()
             return redirect('account')
+        # else:
+        #     print(form.errors)
+
 
     context = {'form': form, 'categories': categories, 'random_products': random_products}
     return render(request, 'users/profile_form.html', context)
 
+
+def contact(request):
+    products = Product.objects.filter(available=True)
+    categories = Category.objects.all()
+    random_products = Product.objects.order_by('?')[:2]
+    recipient = Profile.objects.get(username="admin")
+    form = ContactForm()
+    try:
+        sender = request.user.profile
+    except:
+        sender = None
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            print('message.sender:', message.sender)
+            message.recipient = recipient
+
+            # if sender:
+            #     print('privet')
+            #     message.name = sender
+            #     print('message.name:', message.sender)
+            #     message.sender_email = sender.email
+            message.save()
+
+            messages.success(request, 'Сообщение отправлено успешно')
+            return redirect('contact')
+
+    context = {'recipient': recipient, 'form': form, 'categories': categories, 'products': products,
+               'random_products': random_products}
+    return render(request, 'users/contact.html', context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    products = Product.objects.filter(available=True)
+    categories = Category.objects.all()
+    random_products = Product.objects.order_by('?')[:2]
+    profile = request.user.profile
+    message_request = profile.messages.all()
+    unread_count = message_request.filter(is_read=False).count()
+    context = {'categories': categories, 'products': products, 'message_request': message_request,
+               'unread_count': unread_count}
+    return render(request, 'users/inbox.html', context)
+
+
+@login_required(login_url='login')
+def view_message(request, pk):
+    products = Product.objects.filter(available=True)
+    categories = Category.objects.all()
+    random_products = Product.objects.order_by('?')[:2]
+    profile = request.user.profile
+    message = profile.messages.get(id=pk)
+    if message.is_read is False:
+        message.is_read = True
+        message.save()
+    context = {'categories': categories, 'products': products, 'message': message}
+    return render(request, 'users/message.html', context)

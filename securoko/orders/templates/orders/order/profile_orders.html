@@ -22,8 +22,17 @@
                     <!-- вывод заказов и общей стоимости -->
                     {% for order in orders %}
                     <tr>
-                        <td colspan="2" style="text-align: left; padding-top: 15px; font-weight: bold;">{{ order }}</td>
-                        <td colspan="2" style="text-align: right; padding-top: 15px; font-weight: bold;">{{ order.get_total_cost }}</td>
+                        <td colspan="2" style="text-align: left; padding-top: 30px; font-weight: bold;">{{ order }} от {{order.created}}</td>
+                        <td colspan="2" style="text-align: right; padding-top: 30px; font-weight: bold;">{{ order.get_total_cost }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: left; font-weight: bold;">&nbsp Оплата
+                        {% if order.paid == False %}
+                            <span style="font-style: italic; color:red;"> ожидается</span>
+                        {% else %}
+                            <span style="font-style: italic; color:green;"> оплачен</span>
+                        {% endif %}
+                        </td>
                     </tr>
 
                     <!-- вывод элементов из заказа -->
@@ -34,8 +43,8 @@
                             <td style="text-align: right; padding-right: 15px; background: #e9e9e9;">{{ item.price }}</td>
                             <td style="text-align: right; background: #e9e9e9;">{{ item.get_cost }}</td>
                         </tr>
-                        {% endfor %}
 
+                        {% endfor %}
 
                     {% endfor %}
                 </table>

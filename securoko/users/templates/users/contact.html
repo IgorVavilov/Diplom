@@ -14,14 +14,20 @@
             <div class="col col_13">
             <p>Можете оставить Ваше сообщение в форме ниже. Мы обязательно рассмотрим Ваше обращение, и примем ко вниманию все Ваши пожелания.</p>
             <div id="contact_form">
-               <form method="POST" name="contact" action="#">
+               <form method="POST" name="contact">
                    {% csrf_token %}
-                   {% for field in form %}
 
-                    <label for="author">{{field.label}}</label>{{field}}
+                    <label for="author">{{form.name.label}}</label>{{form.name}}
                     <div class="cleaner h10"></div>
 
-                   {% endfor %}
+                    <label for="author">{{form.sender_email.label}}</label>{{form.sender_email}}
+                    <div class="cleaner h10"></div>
+
+                    <label for="author">{{form.sender_subject.label}}</label>{{form.sender_subject}}
+                    <div class="cleaner h10"></div>
+
+                    <label for="author">{{form.sender_message.label}}</label>{{form.sender_message}}
+                    <div class="cleaner h10"></div>
 
 					<input type="submit" value="Отправить" id="submit" name="submit" class="submit float_l" />
 					<input type="reset" value="Очистить" id="reset" name="reset" class="submit float_r" />

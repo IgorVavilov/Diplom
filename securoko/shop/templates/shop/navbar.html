@@ -11,13 +11,18 @@
             </li>
             <li><a href="about.html">О нас</a>
                 <ul>
-                    <li><a href="#">О компании</a></li>
-                    <li><a href="#">Партнерам</a></li>
-                    <li><a href="#">Контакты</a></li>
+                {% for article in articles %}
+                    {% if article.cat_id == 2 %}
+                        <li><a href="{% url 'article' article.slug %}">{{ article.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                    <li><a href="{% url 'contact' %}">Контакты</a></li>
               </ul>
             </li>
             <li><a href="faqs.html">FAQs</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'profile_orders' user.id %}">Мои заказы</a></li>
+            {% endif %}
             <li><a href="{% url 'contact' %}">Контакты</a></li>
         </ul>
         <br style="clear: left" />
