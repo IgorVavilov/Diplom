@@ -1,6 +1,5 @@
 {% extends 'shop/base.html' %}
 {% block content %}
-{% load static %}
 
 <div class="cleaner h20"></div>
     <div id="templatemo_main_top"></div>
@@ -17,20 +16,19 @@
                    {% csrf_token %}
                    {% for field in form %}
 
-                    <label for="author">{{field.label}}</label>
-                   {{field}}
+                        <label for="author">{{field.label}}</label>
+                           {% if form.errors %}
+                                {% for error in field.errors %}
+                                    <div><strong class="validator">{{ error|escape}}</strong></div>
+                                {% endfor %}
+                           {% endif %}
 
-                    <div class="cleaner h10"></div>
+                   {{field}}
+                        <div class="cleaner h10"></div>
 
                    {% endfor %}
+                    <div class="cleaner h20"></div>
 
-                   {% if form.errors %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <div><strong>{{ error|escape}}</strong></div>
-                        {% endfor %}
-                    {% endfor %}
-                   {% endif %}
 
 					<input type="submit" value="Сохранить" id="submit" name="submit" class="submit float_r" />
 

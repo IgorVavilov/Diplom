@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from users.models import Profile
 
 
 class Category(models.Model):

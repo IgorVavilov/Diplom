@@ -1,8 +1,10 @@
-from .models import *
+from .models import Category, Product, Article
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 
 def paginate_products(request, products, results):
@@ -33,26 +35,26 @@ def user_content(request):
     return categories, random_categories, products, articles, random_products
 
 
-class DataMixin:
-    # paginate_by = 2
-
-    def get_user_context(self, **kwargs):
-        context = kwargs
-
-        # cats = Category.objects.annotate(Count('blog'))
-        categories = Category.objects.all()
-
-        # создание возможности отображения/неотображения пункта меню 'Добавить статью'
-        # user_menu = menu.copy()
-        # if not self.request.user.is_authenticated:
-        #     user_menu.pop(0)
-
-        # context['menu'] = user_menu
-        context['categories'] = categories
-
-        if 'cat_selected' not in context:
-            context['cat_selected'] = 0
-        return context
+# class DataMixin:
+#     # paginate_by = 2
+#
+#     def get_user_context(self, **kwargs):
+#         context = kwargs
+#
+#         # cats = Category.objects.annotate(Count('blog'))
+#         categories = Category.objects.all()
+#
+#         # создание возможности отображения/неотображения пункта меню 'Добавить статью'
+#         # user_menu = menu.copy()
+#         # if not self.request.user.is_authenticated:
+#         #     user_menu.pop(0)
+#
+#         # context['menu'] = user_menu
+#         context['categories'] = categories
+#
+#         if 'cat_selected' not in context:
+#             context['cat_selected'] = 0
+#         return context
 
 
 def search_products(request, category_slug=None):
@@ -69,4 +71,12 @@ def search_products(request, category_slug=None):
         products = products.filter(category=category)
 
     return products, category, search
+
+
+def validate_name(value):   # Валидатор
+    if not value.isalpha():
+        raise ValidationError(
+            _("Неверное значение: %(value)s. Поле должно содержать только буквы."),
+            params={"value": value},
+        )
 

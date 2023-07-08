@@ -3,7 +3,7 @@ from .models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['username', 'email', 'first_name', 'last_name', 'profile_image', 'created']
+    list_display = ['username', 'email', 'first_name', 'last_name', 'created']
 
 
 class ProfileContactMessage(admin.ModelAdmin):

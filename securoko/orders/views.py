@@ -9,10 +9,11 @@ from users.models import Profile
 
 
 def order_create(request):
+    categories, random_categories, products, articles, random_products = user_content(request)
     cart = Cart(request)
-    categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
-    random_products = Product.objects.order_by('?')[:3]
+    # categories = Category.objects.all()
+    # products = Product.objects.filter(available=True)
+    # random_products = Product.objects.order_by('?')[:3]
     if request.user.is_authenticated:
         profile = request.user.profile
 
@@ -30,9 +31,10 @@ def order_create(request):
                 # Очистка корзины
                 cart.clear()
                 context = {'order': order,
-                            'categories': categories,
-                            'products': products,
-                            'random_products': random_products}
+                           'categories': categories,
+                           'products': products,
+                           'random_products': random_products,
+                           'articles': articles}
                 return render(request, 'orders/order/created.html', context)
         else:
             form = OrderCreateForm(instance=profile)
@@ -50,7 +52,8 @@ def order_create(request):
             context = {'order': order,
                        'categories': categories,
                        'products': products,
-                       'random_products': random_products}
+                       'random_products': random_products,
+                       'articles': articles}
             return render(request, 'orders/order/created.html', context)
     else:
         form = OrderCreateForm
@@ -58,7 +61,8 @@ def order_create(request):
                'form': form,
                'categories': categories,
                'products': products,
-               'random_products': random_products}
+               'random_products': random_products,
+               'articles': articles}
     return render(request, 'orders/order/checkout.html', context)
 
 

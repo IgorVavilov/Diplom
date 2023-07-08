@@ -10,12 +10,12 @@
         <div id="content">
         	<h2>Мой аккаунт</h2>
 
-            <div class="col col_13 account">
-                <a href="{% url 'profile_form' %}">Мой профиль</a>
+            <div class="col col_13 ">
+                <a href="{% url 'profile_form' %}" class="account_more">Мой профиль</a>
 
             </div>
-            <div class="col col_13 account">
-                <a href="{% url 'profile_orders' user.id %}">Мои заказы</a>
+            <div class="col col_13 ">
+                <a href="{% url 'profile_orders' user.id %}" class="account_more">Мои заказы</a>
 
             </div>
 		</div>

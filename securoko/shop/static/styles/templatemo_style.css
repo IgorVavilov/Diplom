@@ -67,6 +67,8 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 }
 
 #templatemo_menu {
+    display: flex;
+    justify-content: center;
 	width: 960px;
 	height: 50px;
 }
@@ -330,21 +332,29 @@ table td { border-bottom: 1px solid #ccc }
                     background: url(../images/logo_securoko.png) no-repeat top right}
 
 .account {
+
+	text-align: center;
+	border: solid 1px;
+
+}
+
+a.account_more {
     padding-top: 40px;
 	padding-bottom: 40px;
-	text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    color: #21bdd0;
+    text-decoration: none;
 	font-weight: 700;
 	border: solid 1px;
-	border-color: #eaebec;
 	background-color: #eaebec;
+	border-color: #eaebec;
 }
 
-.account a {
-    text-decoration: none;
-}
-
-.account a:hover {
-    color: #333;
+a.account_more:hover {
+    background-color: #333;
+    color: #21bdd0;
     font-weight: 900;
 }
 
@@ -448,4 +458,17 @@ table td { border-bottom: 1px solid #ccc }
 
 .pagination .btn.btn--sub {
   color: var(--color-light);
+}
+
+.validator{
+    font-size: 11px;
+    display: block;
+    width: 300px;
+    padding: 1px 2px;
+    margin: 0 0 10px 0;
+    color: #ba2121;
+    border: 1px solid #ba2121;;
+    border-radius: 4px;
+    background-position: 5px 12px;
+    overflow-wrap: break-word;
 }

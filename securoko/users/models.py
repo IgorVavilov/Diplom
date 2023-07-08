@@ -1,21 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
-from django.utils.translation import gettext_lazy as _
-import re
-
-
-def validate_name(value):
-    if not value.isalpha():
-        raise ValidationError(
-            _("Неверное значение: %(value)s. Поле должно содержать только буквы."),
-            params={"value": value},
-        )
-
-
-# RE = re.compile('[Я-а]')
+from shop.utils import validate_name
 
 
 class Profile(models.Model):
@@ -24,10 +10,8 @@ class Profile(models.Model):
     phone_number = PhoneNumberField('Телефон', max_length=20, default='', null=True, blank=True, region='RU')
     first_name = models.CharField(max_length=20, verbose_name='Имя', null=True, blank=True,
                                   validators=[validate_name],)
-    last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия',
-                                  validators=[validate_name],)
+    last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия', validators=[validate_name],)
     username = models.CharField(max_length=30, null=True, blank=True, verbose_name='Имя пользователя')
-    profile_image = models.ImageField(upload_to='profiles/', default='profile/user-default.png', verbose_name='Фото профиля')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):

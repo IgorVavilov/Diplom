@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from shop.utils import user_content
 
 from .forms import CustomUserCreationForm, ProfileForm
 from shop.models import Category, Product
@@ -19,7 +20,7 @@ def profiles(request):
 
 
 def login_user(request):
-    categories = Category.objects.all()
+    categories, random_categories, products, articles, random_products = user_content(request)
     if request.user.is_authenticated:
         return redirect('profile_form')
 
@@ -38,7 +39,9 @@ def login_user(request):
             return redirect('index')
         else:
             messages.error(request, 'Пользователь либо пароль не верны')
-    context = {'categories': categories}
+    context = {'categories': categories,
+               'random_products': random_products,
+               'articles': articles,}
     return render(request, 'users/login_register.html', context)
 
 
@@ -49,10 +52,14 @@ def logout_user(request):
 
 
 def register_user(request):
+    categories, random_categories, products, articles, random_products = user_content(request)
     page = 'register'
     form = CustomUserCreationForm()
-    categories = Category.objects.all()
-    context = {'page': page, 'form': form, 'categories': categories}
+    context = {'page': page,
+               'form': form,
+               'categories': categories,
+               'random_products': random_products,
+               'articles': articles,}
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -78,40 +85,35 @@ def register_user(request):
 
 @login_required(login_url='login')
 def user_account(request):
+    categories, random_categories, products, articles, random_products = user_content(request)
     prof = request.user.profile
-    categories = Category.objects.all()
-    random_products = Product.objects.order_by('?')[:1]
-    context = {
-        'profile': prof,
-        'categories': categories,
-        'random_products': random_products
-    }
+    context = {'profile': prof,
+               'categories': categories,
+               'random_products': random_products,
+               'articles': articles,}
     return render(request, 'users/account.html', context)
 
 
 @login_required(login_url='login')
 def edit_account(request):
-    profile = request.user.profile  # Необходима для отображения информации в форме, которые уже были созданы
-    form = ProfileForm(instance=profile)  # передаем данные профиля в форму
-    categories = Category.objects.all()
-    random_products = Product.objects.order_by('?')[:1]
+    categories, random_categories, products, articles, random_products = user_content(request)
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('account')
-        # else:
-        #     print(form.errors)
 
-
-    context = {'form': form, 'categories': categories, 'random_products': random_products}
+    context = {'form': form,
+               'categories': categories,
+               'random_products': random_products,
+               'articles': articles,}
     return render(request, 'users/profile_form.html', context)
 
 
 def contact(request):
-    products = Product.objects.filter(available=True)
-    categories = Category.objects.all()
-    random_products = Product.objects.order_by('?')[:2]
+    categories, random_categories, products, articles, random_products = user_content(request)
     recipient = Profile.objects.get(username="admin")
     form = ContactForm()
     try:
@@ -137,8 +139,12 @@ def contact(request):
             messages.success(request, 'Сообщение отправлено успешно')
             return redirect('contact')
 
-    context = {'recipient': recipient, 'form': form, 'categories': categories, 'products': products,
-               'random_products': random_products}
+    context = {'recipient': recipient,
+               'form': form,
+               'products': products,
+               'categories': categories,
+               'random_products': random_products,
+               'articles': articles,}
     return render(request, 'users/contact.html', context)
 
 

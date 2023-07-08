@@ -2,17 +2,19 @@ from django.db import models
 from shop.models import Product
 from django.contrib.auth.models import User
 from users.models import Profile
-
+from phonenumber_field.modelfields import PhoneNumberField
+from shop.utils import validate_name
 
 
 class Order(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, blank=True, null=True)
-    first_name = models.CharField(max_length=50, verbose_name='Имя')
-    last_name = models.CharField(max_length=50, verbose_name='Фамилия')
+    first_name = models.CharField(max_length=20, verbose_name='Имя', null=True, blank=True,
+                                  validators=[validate_name], )
+    last_name = models.CharField(max_length=30, null=True, blank=True, verbose_name='Фамилия', validators=[validate_name],)
     email = models.EmailField()
-    phone_number = models.CharField('Телефон', max_length=13, default='', blank=True, null=True)
+    phone_number = PhoneNumberField('Телефон', max_length=20, default='', null=True, blank=True, region='RU')
     address = models.CharField(max_length=250, verbose_name='Адрес')
-    postal_code = models.CharField(max_length=20, verbose_name='Почтовый индекс')
+    postal_code = models.IntegerField(verbose_name='Почтовый индекс')
     city = models.CharField(max_length=100, verbose_name='Город')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now_add=True, verbose_name='Дата обновления')

@@ -9,7 +9,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li><a href="about.html">О нас</a>
+            <li><a href="#">О нас</a>
                 <ul>
                 {% for article in articles %}
                     {% if article.cat_id == 2 %}
@@ -19,7 +19,7 @@
                     <li><a href="{% url 'contact' %}">Контакты</a></li>
               </ul>
             </li>
-            <li><a href="faqs.html">FAQs</a></li>
+            <li><a href="#">FAQs</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'profile_orders' user.id %}">Мои заказы</a></li>
             {% endif %}
