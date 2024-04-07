@@ -1,0 +1,8 @@
+
+gunicorn.conf.py
+securoko.conf
+
+local_settings.py
+prod_settings.py
+
+/media
